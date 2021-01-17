@@ -18,26 +18,31 @@ class DashboardController extends AbstractController
     {
         $movie = new Movies();
         $form = $this->createForm(QueryMovieType::class);
-
+        $downloadingMovies = Movies::getDownloaded();
+        $param = [];
+        
+        $popularMovies = Movies::getMoviePopular();
+        if ($downloadingMovies) {
+           $param['downloadingMovies'] = $downloadingMovies;
+        }
+        if ($popularMovies) {
+            $param['popularMovies'] = $popularMovies;
+         }
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
             $movie = $form->getData()['movie'];
             $response = Movies::getMovieByName($movie);
             $movies = $response['results'];
-
-            return $this->render('dashboard/index.html.twig', [
-                'controller_name' => 'DashboardController',
-                'form' => $form->createView(),
-                'movies' => $movies,
-            ]);
+            $param['form'] = $form;
+            if ($movies) {
+                $param['movies'] = $movies;
+            }
         }
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-            'form' => $form->createView(),
-        ]);
+        $param['form'] = $form->createView();
+
+        return $this->render('dashboard/index.html.twig', $param);
 
     }
 
