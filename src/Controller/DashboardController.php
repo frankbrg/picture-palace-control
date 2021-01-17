@@ -40,4 +40,19 @@ class DashboardController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/download/{id}", name="download")
+     */
+    public function download($id): Response
+    {
+
+        $movie = Movies::getMovieById($id);
+        $response = Movies::downloadMovie($movie);
+
+
+        return $this->render('dashboard/download.html.twig', [
+            'controller_name' => 'DashboardController',
+        ]);
+    }
 }

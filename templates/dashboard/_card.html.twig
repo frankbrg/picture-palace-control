@@ -9,6 +9,10 @@
         </div>
         <div class="text-purple-500">{{movie.vote_average}}</div>
         <div class="text-gray-500"></div>
+        {{movie.id}}
+        <a href="{{ path('download', {
+            id: movie.id,
+        }) }}">Download</a>
     </div>
 </div>
 
