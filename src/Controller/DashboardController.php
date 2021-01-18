@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Movies;
+use App\Services\Movies;
 use App\Form\QueryMovieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
