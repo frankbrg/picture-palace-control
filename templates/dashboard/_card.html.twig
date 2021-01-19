@@ -28,13 +28,11 @@
             {% endif %}
         </div>
         <div class="flex flex-row-reverse">
-            <div class=" shadow-md bg-gradient-to-r hover:from-purple-500 hover:via-purple-500 hover:to-purple-500 from-purple-500 via-indigo-700 to-blue-800 w-10 h-10 text-white rounded-full p-2 ">
-                <a href="{{ path('download', {id: movie.id,}) }}">
-                    <svg class="" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                </a>
-            </div>
+            <a class=" shadow-md bg-gradient-to-r hover:from-purple-500 hover:via-purple-500 hover:to-purple-500 from-purple-500 via-indigo-700 to-blue-800 w-10 h-10 text-white rounded-full p-2 "href="{{ path('download', {id: movie.id,}) }}">
+                <svg class="" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+            </a>
         </div>
     </div>
 </div>
