@@ -5,8 +5,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<div class="flex items-center min-h-screen justify-center my-auto w-full h-full">
-    <form class="flex dark:bg-gray-900 bg-white p-5 flex-col rounded-md space-y-4 w-96 shadow-lg" method="post">
+<div class="flex items-center min-h-screen justify-center my-auto w-full h-full ">
+    <form class="flex dark:bg-gray-900 bg-white p-5 flex-col sm:rounded-md  space-y-4 sm:w-96 w-full min-h-screen sm:min-h-full sm:shadow-lg justify-between " method="post">
         {% if error %}
             <div class="alert dark:text-white text-gray-800 alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -17,7 +17,7 @@
             </div>
         {% endif %}
 
-        <h1 class="dark:text-white text-2xl font-bold ">Sign in to your account</h1>
+        <h1 class="dark:text-white text-4xl font-bold ">Sign in to your account</h1>
         <div class="rounded-md shadow-sm -space-y-px">
             <div class="">
                 <label class="dark:text-white  text-gray-800 sr-only" for="inputEmail">Email address</label>
@@ -43,7 +43,7 @@
             </div>
         #}
 
-        <button class="hover:bg-indigo-700 bg-indigo-600 text-white p-1 rounded-md" type="submit">
+        <button class="hover:bg-indigo-700 bg-indigo-600 text-white p-3 rounded-md" type="submit">
             Sign in
         </button>
     </form>

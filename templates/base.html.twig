@@ -8,9 +8,8 @@
         {% block menu %}{% include 'dashboard/_header.html.twig' %}{% endblock %}
     </head>
     <body class="dark:bg-gray-600 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         {% block body %}{% endblock %}
-        </div>
+
         {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
     </body>
 </html>
