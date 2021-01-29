@@ -17,7 +17,7 @@ class DashboardController extends AbstractController
     public function index(Request $request): Response
     {
         if (!$this->getUser()) {
-            return $this->render('dashboard/visitorpage.html.twig');
+            return $this->redirectToRoute('app_login');
         }
         $movie = new Movies();
         $form = $this->createForm(QueryMovieType::class);
