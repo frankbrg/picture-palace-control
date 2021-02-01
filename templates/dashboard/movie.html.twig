@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{movie.title}}{% endblock %}
+
+{% block body %}
+<div class=" overflow-hidden w-full bg-no-repeat" style="z-index: -1;">
+    <div class="bg-center h-52 sm:h-96 bg-no-repeat bg-cover"style="background-image: url(https://image.tmdb.org/t/p/original/{{movie.backdrop_path}})">
+    </div>
+</div>
+<div class="bg-indigo-700">
+    <div class="flex items-center flex-row justify-between max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4">
+        <div class="felx flex-col" >
+            <h1 class="text-4xl text-white font-bold ">{{movie.title}}</h1>
+            <div class="flex flex-col sm:flex-row sm:space-x-2">
+                <div class="text-gray-300 flex items-center flex-nowrap">
+                    <svg class="text-yellow-300 w-6 h-6 text-center mr-1"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    {{movie.vote_average}}
+                </div>
+                <div class="text-gray-300 flex items-center flex-nowrap">
+                    <svg class=" text-blue-400 w-6 h-6 text-center mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                    </svg>
+                    {% if movie.release_date is defined %}
+
+                        {{movie.release_date|date("j M. Y") }}
+
+                    {% endif %}
+                </div>
+                <div class="text-gray-300 flex items-center flex-nowrap">
+                    <svg class=" text-red-400 w-6 h-6 text-center mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4zm2 0h1V9h-1v2zm1-4V5h-1v2h1zM5 5v2H4V5h1zm0 4H4v2h1V9zm-1 4h1v2H4v-2z" clip-rule="evenodd" />
+                    </svg>
+                    <div class="flex flex-nowrap">
+                    {% for genre in movie.genres|slice(0, 3) %}
+                        <label class="mr-2 text-center text-gray-300">{{ genre.name }}</label>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class=" hidden sm:flex px-4  shadow-md bg-gradient-to-r bg-red-400 h-10 text-white rounded-full p-2 "href="{{ path('download', {id: movie.id,}) }}">
+            <svg class="h-full mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <label class="pr-2">Download</label>
+        </a>
+    </div>
+</div>
+
+    </div>
+<div class="bg-white dark:bg-gray-800">
+
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8  py-4">
+        <h2 class="text-2xl text-gray-700 dark:text-white font-bold mb-4">Synopsis</h2>
+        <p class=" dark:text-gray-300">{{movie.overview}}</p>
+
+        <h2 class="text-2xl text-gray-700 dark:text-white font-bold py-4">Actors</h2>
+        <div class= "flex flex-nowrap space-x-4 flex-wrap overflow-x-auto pb-5" style="">
+        {% for actor in cast.cast %}
+            {% if actor.profile_path is not null %}
+            <div class="flex flex-col justify-items-center bg-indigo-700 rounded-xl w-36 h-64 mb-auto">
+                <div class="w-36 text-center overflow-hidden rounded-t-xl">
+                    <img class="w-full" src="https://image.tmdb.org/t/p/w500/{{actor.profile_path}}">
+                </div>
+                <label class=" my-2 text-center text-white">{{ actor.name }}</label>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+        <h2 class="text-2xl text-gray-700 dark:text-white font-bold py-4">You will like</h2>
+        <div class= "flex flex-nowrap space-x-4 flex-wrap overflow-x-auto pb-5">
+        {% for movieSimilar in similar.results %}
+            <div class=" flex flex-col justify-items-center bg-indigo-700 rounded-xl w-36 h-64 mb-auto">
+                <div class="w-36 text-center overflow-hidden rounded-t-xl">
+                    <img class="w-full" src="https://image.tmdb.org/t/p/w500/{{movieSimilar.poster_path}}">
+                </div>
+                <a href="{{ path('movie', {id: movieSimilar.id,}) }}" class=" my-2 text-center text-white">{{ movieSimilar.title }}</a>
+            </div>
+        {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
