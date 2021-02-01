@@ -3,6 +3,8 @@ namespace App\Services;
 
 class Movies
 {
+
+    private const apiKey = "384666e68d8f8e3ccd0d317fbd9f359a";
     public static function getMovieByName(string $name)
     {
         $curl = curl_init();
@@ -76,6 +78,47 @@ class Movies
     {
         $curl = curl_init();
         $link = "https://api.themoviedb.org/3/movie/{$id}?api_key=384666e68d8f8e3ccd0d317fbd9f359a&language=en-US";
+        $link = str_replace ( ' ', '%20', $link);
+        $opts = [
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_URL            => $link,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_CONNECTTIMEOUT => 30
+        ];
+
+        
+        curl_setopt_array($curl, $opts);
+        $response = json_decode(curl_exec($curl), true);
+        curl_close($curl);
+        return $response;
+    }
+
+    public static function getCastByMovieId($id)
+    {
+        $curl = curl_init();
+        $link = "https://api.themoviedb.org/3/movie/$id/credits?api_key=384666e68d8f8e3ccd0d317fbd9f359a&language=en-US";
+        $link = str_replace ( ' ', '%20', $link);
+        $opts = [
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_URL            => $link,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_CONNECTTIMEOUT => 30
+        ];
+
+        
+        curl_setopt_array($curl, $opts);
+        $response = json_decode(curl_exec($curl), true);
+        curl_close($curl);
+        return $response;
+    }
+
+
+    public static function getSimilarByMovieId($id)
+    {
+        $curl = curl_init();
+        $link = "https://api.themoviedb.org/3/movie/$id/similar?api_key=384666e68d8f8e3ccd0d317fbd9f359a&language=en-US";
         $link = str_replace ( ' ', '%20', $link);
         $opts = [
             CURLOPT_SSL_VERIFYPEER => false,

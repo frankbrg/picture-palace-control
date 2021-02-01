@@ -50,10 +50,34 @@ class DashboardController extends AbstractController
     }
 
     /**
+     * @Route("/movie/{id}", name="movie")
+     */
+    public function findOutMoreAboutMovie($id): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $movie = Movies::getMovieById($id);
+        $cast= Movies::getCastByMovieId($id);
+        $similar = Movies::getSimilarByMovieId($id);
+
+        return $this->render('dashboard/movie.html.twig', [
+            'movie' => $movie,
+            'cast'  => $cast,
+            'similar' => $similar,
+        ]);
+
+    }
+
+    /**
      * @Route("/download/{id}", name="download")
      */
     public function download($id): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $movie = Movies::getMovieById($id);
         $response = Movies::downloadMovie($movie);
