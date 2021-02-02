@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
         {% block menu %}{% include 'dashboard/_header.html.twig' %}{% endblock %}
     </head>

@@ -1,10 +1,12 @@
 
 
-<div class=" flex flex-col justify-items-center bg-indigo-700 rounded-xl w-36 h-64 mb-auto">
-    <div class="w-36 text-center overflow-hidden rounded-t-xl">
-        <img class="w-full" src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
+{% if movie.poster_path is not null %}
+<a href="{{ path('movie', {id: movie.id,}) }}">
+    <div class=" flex flex-col justify-items-center bg-indigo-700 rounded-xl mb-auto">
+        <div class="w-36 text-center overflow-hidden rounded-xl" style="height:13.5rem">
+            <img class="w-full h-full object-cover" src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
+        </div>
     </div>
-    <a href="{{ path('movie', {id: movie.id,}) }}" class=" my-2 text-center text-white">{{ movie.title }}</a>
-</div>
-
+</a>
+{% endif %}
 

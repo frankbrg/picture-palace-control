@@ -40,11 +40,11 @@
                 </div>
             </div>
         </div>
-        <a class=" hidden sm:flex px-4  shadow-md bg-gradient-to-r bg-red-400 h-10 text-white rounded-full p-2 "href="{{ path('download', {id: movie.id,}) }}">
-            <svg class="h-full mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a class=" mt-auto sm:mt-0 flex p-3 sm:px-4 sm:py-2 shadow-md bg-gradient-to-r bg-red-400 h-12 sm:h-10 text-white rounded-full"href="{{ path('download', {id: movie.id,}) }}">
+            <svg class="h-full sm:mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            <label class="pr-2">Download</label>
+            <label class="hidden sm:flex pr-2">Download</label>
         </a>
     </div>
 </div>
@@ -60,25 +60,20 @@
         <div class= "flex flex-nowrap space-x-4 flex-wrap overflow-x-auto pb-5" style="">
         {% for actor in cast.cast %}
             {% if actor.profile_path is not null %}
-            <div class="flex flex-col justify-items-center bg-indigo-700 rounded-xl w-36 h-64 mb-auto">
-                <div class="w-36 text-center overflow-hidden rounded-t-xl">
-                    <img class="w-full" src="https://image.tmdb.org/t/p/w500/{{actor.profile_path}}">
+                <div class=" flex flex-col justify-items-center bg-indigo-700 rounded-xl mb-auto">
+                    <div class="w-36 text-center overflow-hidden rounded-t-xl" style="height:13.5rem">
+                        <img class="w-full h-full object-cover" src="https://image.tmdb.org/t/p/w500/{{actor.profile_path}}">
+                    </div>
+                    <label class=" overflow-hidden max-h-6 my-2 text-center text-white">{{ actor.name }}</label>
                 </div>
-                <label class=" my-2 text-center text-white">{{ actor.name }}</label>
-            </div>
             {% endif %}
         {% endfor %}
         </div>
 
         <h2 class="text-2xl text-gray-700 dark:text-white font-bold py-4">You will like</h2>
         <div class= "flex flex-nowrap space-x-4 flex-wrap overflow-x-auto pb-5">
-        {% for movieSimilar in similar.results %}
-            <div class=" flex flex-col justify-items-center bg-indigo-700 rounded-xl w-36 h-64 mb-auto">
-                <div class="w-36 text-center overflow-hidden rounded-t-xl">
-                    <img class="w-full" src="https://image.tmdb.org/t/p/w500/{{movieSimilar.poster_path}}">
-                </div>
-                <a href="{{ path('movie', {id: movieSimilar.id,}) }}" class=" my-2 text-center text-white">{{ movieSimilar.title }}</a>
-            </div>
+        {% for movie in similar.results %}
+            {% include 'dashboard/_card.html.twig' %}
         {% endfor %}
         </div>
 
