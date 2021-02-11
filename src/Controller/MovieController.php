@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class DashboardController extends AbstractController
+class MovieController extends AbstractController
 {
     /**
-     * @Route("/", name="dashboard")
+     * @Route("/", name="movies")
      */
     public function index(Request $request): Response
     {
@@ -26,7 +26,7 @@ class DashboardController extends AbstractController
         
         $popularMovies = Movies::getMoviePopular();
         if ($downloadingMovies) {
-           $param['downloadingMovies'] = $downloadingMovies;
+            $param['downloadingMovies'] = $downloadingMovies;
         }
         if ($popularMovies) {
             $param['popularMovies'] = $popularMovies;
@@ -45,7 +45,7 @@ class DashboardController extends AbstractController
         }
         $param['form'] = $form->createView();
 
-        return $this->render('dashboard/index.html.twig', $param);
+        return $this->render('movies/movies_dashboard.html.twig', $param);
 
     }
 
@@ -61,8 +61,9 @@ class DashboardController extends AbstractController
         $movie = Movies::getMovieById($id);
         $cast= Movies::getCastByMovieId($id);
         $similar = Movies::getSimilarByMovieId($id);
+        $movie['backdrop'] = Movies::getSimilarByMovieId($id);
 
-        return $this->render('dashboard/movie.html.twig', [
+        return $this->render('movies/movie.html.twig', [
             'movie' => $movie,
             'cast'  => $cast,
             'similar' => $similar,
@@ -83,8 +84,8 @@ class DashboardController extends AbstractController
         $response = Movies::downloadMovie($movie);
 
 
-        return $this->render('dashboard/download.html.twig', [
-            'controller_name' => 'DashboardController',
+        return $this->render('movies/download.html.twig', [
+            'controller_name' => 'MovieController',
         ]);
     }
 }

@@ -6,7 +6,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
-        {% block menu %}{% include 'dashboard/_header.html.twig' %}{% endblock %}
+        {% block menu %}{% include 'movies/_header.html.twig' %}{% endblock %}
     </head>
     {% block bodytag %}<body class="dark:bg-gray-800 bg-white">{% endblock %}
         {% block body %}{% endblock %}

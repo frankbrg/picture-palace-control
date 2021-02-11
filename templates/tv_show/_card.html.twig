@@ -1,0 +1,12 @@
+
+
+{% if tvshow.poster_path is not null %}
+<a href="{{ path('tvshow', {id: tvshow.id,}) }}">
+    <div class=" flex flex-col justify-items-center bg-indigo-700 rounded-xl mb-auto">
+        <div class="w-36 text-center overflow-hidden rounded-xl" style="height:13.5rem">
+            <img class="w-full h-full object-cover" src="https://image.tmdb.org/t/p/w500/{{tvshow.poster_path}}">
+        </div>
+    </div>
+</a>
+{% endif %}
+
