@@ -3,7 +3,6 @@ namespace App\Services;
 
 class TvShows
 {
-
     private const apiKey = "384666e68d8f8e3ccd0d317fbd9f359a";
     private const link = "https://api.themoviedb.org/3/";
     private const type = "tv";
@@ -45,7 +44,6 @@ class TvShows
     }
 
     public function getTvShowByName(string $name) {
-        
         return $this->doRequest($this->preRequest("search", $name));
     }
 
@@ -53,5 +51,22 @@ class TvShows
 
         return $this->doRequest($this->preRequest($id));
     }
-   
+
+    public function getCastByTvShowId($id)
+    {
+        return $this->doRequest($this->preRequest("$id/credits"));
+    }
+
+    public function getSimilarByTvShowId($id)
+    {
+        return $this->doRequest($this->preRequest("$id/similar"));
+    }
+
+    public function downloadTv($tvShow)
+    {
+        $sonarr = new Sonarr();
+        $tvShow['id'] = $this->doRequest($this->preRequest("{$tvShow["id"]}/external_ids"))['tvdb_id'];
+        return $sonarr->downloadTvShow($tvShow);
+
+    }
 }

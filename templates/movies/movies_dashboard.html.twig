@@ -28,10 +28,10 @@
         </div>
     {% endif %}
 
-    {% if popularMovies is defined %}
+    {% if popular is defined %}
         <h1 class="dark:text-white text-2xl font-bold my-2">Popular</h1>
         <div class= "flex flex-nowrap space-x-4 flex-wrap overflow-x-auto pb-5">
-            {% for movie in popularMovies %}
+            {% for movie in popular %}
                     {% include 'movies/_card.html.twig' %}
             {% endfor %}
         </div>

@@ -72,7 +72,7 @@
 
         <h2 class="text-2xl text-gray-700 dark:text-white font-bold py-4">You will like</h2>
         <div class= "flex flex-nowrap space-x-4 flex-wrap overflow-x-auto pb-5">
-        {% for movie in similar.results %}
+        {% for movie in similar %}
             {% include 'movies/_card.html.twig' %}
         {% endfor %}
         </div>

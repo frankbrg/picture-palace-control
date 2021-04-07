@@ -14,31 +14,22 @@ class MovieController extends AbstractController
     /**
      * @Route("/", name="movies")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, Movies $movies): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        $movie = new Movies();
-        $form = $this->createForm(QueryMovieType::class);
-        $downloadingMovies = Movies::getDownloaded();
+
         $param = [];
-        
-        $popularMovies = Movies::getMoviePopular();
-        if ($downloadingMovies) {
-            $param['downloadingMovies'] = $downloadingMovies;
-        }
-        if ($popularMovies) {
-            $param['popularMovies'] = $popularMovies;
-         }
+        $param['popular'] = $movies->getPopular();
+        $form = $this->createForm(QueryMovieType::class);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $movie = $form->getData()['movie'];
-            $response = Movies::getMovieByName($movie);
-            $movies = $response['results'];
-            $param['form'] = $form;
+            $searchmovie = $form->getData()['movie'];
+            $response = $movies->getMoviesByName($searchmovie);
+            $movies = $response;
             if ($movies) {
                 $param['movies'] = $movies;
             }
@@ -46,27 +37,21 @@ class MovieController extends AbstractController
         $param['form'] = $form->createView();
 
         return $this->render('movies/movies_dashboard.html.twig', $param);
-
     }
 
     /**
      * @Route("/movie/{id}", name="movie")
      */
-    public function findOutMoreAboutMovie($id): Response
+    public function findOutMoreAboutMovie($id, Movies $movies): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        $movie = Movies::getMovieById($id);
-        $cast= Movies::getCastByMovieId($id);
-        $similar = Movies::getSimilarByMovieId($id);
-        $movie['backdrop'] = Movies::getSimilarByMovieId($id);
-
         return $this->render('movies/movie.html.twig', [
-            'movie' => $movie,
-            'cast'  => $cast,
-            'similar' => $similar,
+            'movie' => $movies->getMovieById($id),
+            'cast' => $movies->getCastByMovieId($id),
+            'similar' => $movies->getSimilarByMovieId($id)
         ]);
 
     }
@@ -74,18 +59,13 @@ class MovieController extends AbstractController
     /**
      * @Route("/download/{id}", name="download")
      */
-    public function download($id): Response
+    public function download($id, Movies $movies): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        $movie = Movies::getMovieById($id);
-        $response = Movies::downloadMovie($movie);
-
-
-        return $this->render('movies/download.html.twig', [
-            'controller_name' => 'MovieController',
-        ]);
+        $response = $movies->downloadMovie($movies->getMovieById($id));
+        return $this->redirectToRoute('movies');
     }
 }

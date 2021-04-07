@@ -42,7 +42,7 @@ class TvShowController extends AbstractController
     /**
      * @Route("/tvshow/{id}", name="tvshow")
      */
-    public function findOutMoreAboutMovie($id, TvShows $tvShow): Response
+    public function findOutMoreAboutTvShow($id, TvShows $tvShow): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
@@ -50,7 +50,22 @@ class TvShowController extends AbstractController
 
         return $this->render('tv_show/tvshow.html.twig', [
             'tvshow' => $tvShow->getTvShowById($id),
+            'cast' => $tvShow->getCastByTvShowId($id),
+            'similar' => $tvShow->getSimilarByTvShowId($id)
         ]);
 
+    }
+
+        /**
+     * @Route("/downloadtv/{id}", name="downloadTv")
+     */
+    public function download($id, TvShows $tvShows): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $response = $tvShows->downloadTv($tvShows->getTvShowById($id));
+        return $this->redirectToRoute('tv_show');
     }
 }

@@ -4,7 +4,7 @@
     <div class="relative flex items-center justify-between h-16">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
-        <button id="trigger-menu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-expanded="false">
+        <button id="trigger-menu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:hover:bg-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
           <!-- Icon when menu is closed. -->
           <!--
@@ -40,8 +40,8 @@
         <div class="hidden sm:block sm:ml-6">
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href={{path('movies')}} class=" bg-gray-100 dark:bg-gray-900 dark:text-white text-black px-3 py-2 rounded-md text-sm font-medium">Movies</a>
-            <a href={{path('tv_show')}} class=" bg-gray-100 dark:bg-gray-900 dark:text-white text-black px-3 py-2 rounded-md text-sm font-medium">Tv Shows</a>
+            <a href={{path('movies')}}  class=" {{ app.request.get('_route') == 'movies' ? 'bg-indigo-500 dark:bg-gray-900 text-white' }}  bg-white dark:bg-gray-800 dark:text-white text-black px-3 py-2 rounded-md text-sm font-medium">Movies</a>
+            <a href={{path('tv_show')}} class=" {{ app.request.get('_route') == 'tv_show' ? 'bg-indigo-500 dark:bg-gray-900 text-white' }}  bg-white dark:bg-gray-800 dark:text-white text-black px-3 py-2 rounded-md text-sm font-medium">Tv Shows</a>
           </div>
         </div>
       </div>
@@ -61,8 +61,10 @@
   <div id="menu-res" class="hidden sm:hidden">
     <div class="px-2 pt-2 pb-3 space-y-1 flex">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a href={{path('movies')}} class="w-full bg-indigo-500 dark:bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Movies</a>
-        <a href={{path('tv_show')}} class="w-full bg-indigo-500 dark:bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Tv Shows</a>
+        <a href={{path('movies')}} class=" {{ app.request.get('_route') == 'movies' ? 'bg-indigo-500 dark:bg-gray-900 text-white' }} w-full bg-white dark:bg-gray-800 dark:text-white text-black px-3 py-2 rounded-md text-sm font-medium">Movies</a>
+    </div>
+    <div class="px-2 pt-2 pb-3 space-y-1 flex">
+        <a href={{path('tv_show')}} class=" {{ app.request.get('_route') == 'tv_show' ? 'bg-indigo-500 dark:bg-gray-900 text-white' }} w-full bg-white dark:bg-gray-800 dark:text-white text-black px-3 py-2 rounded-md text-sm font-medium">Tv Shows</a>
     </div>
   </div>
 </nav>
