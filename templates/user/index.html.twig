@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Library{% endblock %}
+
+{% block body %}
+<div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+
+    {% if movies is defined %}
+        <h1 class="dark:text-white text-2xl font-bold my-2">Library</h1>
+        <div class= "flex flex-wrap pb-5">
+            {% for movie in movies %}
+                    {% include 'user/_card.html.twig' %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

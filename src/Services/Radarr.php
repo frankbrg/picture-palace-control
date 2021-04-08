@@ -4,11 +4,11 @@ namespace App\Services;
 class Radarr
 {
     private const apiKey = "2209ca02fb68410e9a8994c63ea060b1";
-    private const link = "https://fedalino.lw887.usbx.me/radarr/api/";
+    private const API_URL = "https://fedalino.lw887.usbx.me/radarr/api/";
 
     private function preRequest($get, $movie) {
 
-        $link = str_replace(' ', '%20', self::link.$get."?apikey=".self::apiKey);
+        $link = str_replace(' ', '%20', self::API_URL.$get."?apikey=".self::apiKey);
 
         $data = [
             "title"             => $movie['title'],
@@ -67,35 +67,24 @@ class Radarr
         return $this->doRequest($this->preRequest('movie', $movie));
     }
 
-    public static function getDownloaded()
+    public function makeCall($request)
     {
-        $curl = curl_init();
-        $link = "https://fedalino.lw887.usbx.me/radarr/api/queue?page=1&pageSize=20&sortDirection=ascending&sortKey=timeLeft&includeUnknownMovieItems=false&apikey=2209ca02fb68410e9a8994c63ea060b1";
-        $link = str_replace ( ' ', '%20', $link);
+        $url = str_replace(' ', '%20', self::API_URL.$request."?apikey=".self::apiKey);
+
         $opts = [
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_URL            => $link,
+            CURLOPT_URL            => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT        => 5,
             CURLOPT_CONNECTTIMEOUT => 5
         ];
 
-        
-        curl_setopt_array($curl, $opts);
-        $response = json_decode(curl_exec($curl),true);
-        $moviesDL = array();
-        for ($i=0; $i < sizeof($response); $i++) { 
-            $response[$i];
-            if ($response[$i]['status'] == "Downloading") {
-                array_push($moviesDL, $response[$i]);
-            }
-        }
-        if (empty($moviesDL)) {
-            return null;
-        }
-        $response =$moviesDL;
-        curl_close($curl);
-        return $response;
+        return $this->doRequest($opts);
+    }
+
+    public function getMovies() {
+
+        return $this->makeCall('movie');
     }
 
 
