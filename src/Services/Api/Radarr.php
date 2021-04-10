@@ -1,5 +1,5 @@
 <?php
-namespace App\Services;
+namespace App\Services\Api;
 
 class Radarr
 {
@@ -67,9 +67,9 @@ class Radarr
         return $this->doRequest($this->preRequest('movie', $movie));
     }
 
-    public function makeCall($request)
+    public function makeCall($request, $param = "")
     {
-        $url = str_replace(' ', '%20', self::API_URL.$request."?apikey=".self::apiKey);
+        $url = str_replace(' ', '%20', self::API_URL.$request."?apikey=".self::apiKey.$param);
 
         $opts = [
             CURLOPT_SSL_VERIFYPEER => false,
@@ -82,9 +82,42 @@ class Radarr
         return $this->doRequest($opts);
     }
 
+    public function makeDelete($request, $param = "")
+    {
+        $url = str_replace(' ', '%20', self::API_URL.$request."?apikey=".self::apiKey.$param);
+
+        $opts = [
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_URL            => $url,
+            CURLOPT_CUSTOMREQUEST   => "DELETE",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 5,
+            CURLOPT_CONNECTTIMEOUT => 5
+        ];
+
+        return $this->doRequest($opts);
+    }
     public function getMovies() {
 
         return $this->makeCall('movie');
+    }
+
+    public function delete(int $movie)
+    {
+        return $this->makeDelete('movie/'.$movie,'&addImportExclusion=true&deleteFiles=true');
+    }
+
+    public function getMovieByTmdbId(int $tmdbId)
+    {
+        $movies =  $this->getMovies();
+
+        for ($i=0; $i < count($movies); $i++) { 
+            if ($movies[$i]['tmdbId'] == $tmdbId) {
+                return $movies[$i]['id'];
+            }
+        }
+
+        return null;
     }
 
 

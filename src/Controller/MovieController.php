@@ -83,6 +83,6 @@ class MovieController extends AbstractController
         }
 
         $response = $movies->downloadMovie($movies->getMovieById($id));
-        return $this->redirectToRoute('movies');
+        return $this->redirectToRoute('user_library');
     }
 }

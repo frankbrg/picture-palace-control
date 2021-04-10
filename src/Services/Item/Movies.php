@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Item;
 
+use App\Services\Api\Radarr;
+
 class Movies extends AbstractItem 
 {
     private const apiKey = "384666e68d8f8e3ccd0d317fbd9f359a";
@@ -56,7 +58,12 @@ class Movies extends AbstractItem
 
     public function getMovieById(string $id) {
 
-        return $this->doRequest($this->preRequest($id));
+        $radarr = new Radarr();
+
+        $movie = $this->doRequest($this->preRequest($id));
+        $movie['api_db_id'] = $radarr->getMovieByTmdbId($id);
+
+        return $movie;
     }
 
     public function getCastByMovieId($id)

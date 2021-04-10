@@ -70,6 +70,6 @@ class TvShowController extends AbstractController
         }
 
         $response = $tvShows->downloadTv($tvShows->getTvShowById($id));
-        return $this->redirectToRoute('tv');
+        return $this->redirectToRoute('user_library');
     }
 }

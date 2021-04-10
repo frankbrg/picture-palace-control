@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Item;
 
+use App\Services\Api\Sonarr;
+
 class TvShows extends AbstractItem 
 {
     private const apiKey = "384666e68d8f8e3ccd0d317fbd9f359a";
@@ -54,8 +56,11 @@ class TvShows extends AbstractItem
     }
 
     public function getTvShowById(string $id) {
+        
+        $tv = $this->doRequest($this->preRequest($id));
+        $tv['api_db_id'] = null;
 
-        return $this->doRequest($this->preRequest($id));
+        return $tv;
     }
 
     public function getCastByTvShowId($id)

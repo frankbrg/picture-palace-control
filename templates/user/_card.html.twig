@@ -1,20 +1,26 @@
 
+<div class="group relative">
+    <a href="{{ path('show_movie', {id: movie.tmdbId,}) }}">
+        {% for image in movie.images %}
+        {% if image.coverType == 'poster' %}
+            
+        <img width="150" height="200" class="{% if movie.downloaded == false %} animate-pulse {% endif %} flex flex-col w-full bg-cover justify-items-center bg-indigo-700 rounded-xl mb-auto" src="{{image.remoteUrl}}">
+        {% endif %}
+        {% endfor %}
+            {% if movie.downloaded == true %}
+            {% else %}
+                <div class="transition group-hover:opacity-0 opacity-100 absolute top-0 right-0 p-1 rounded-2xl shadow-md flex m-1 w-7 h-7 justify-items-center justify-center flex-row-reverse bg-white bg-opacity-95 text-white ml-auto">
+                    <svg class=" animate-bounce text-indigo-800 w-full h-full text-center font-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v4m0 0l-2-2m2 2l2-2" />
+                    </svg>
+                </div>
 
-
-<a class="relative" href="{{ path('show_movie', {id: movie.tmdbId,}) }}">
-    {% for image in movie.images %}
-    {% if image.coverType == 'poster' %}
-        
-    <img width="150" height="200" class="{% if movie.downloaded == false %} animate-pulse {% endif %} flex flex-col w-full bg-cover justify-items-center bg-indigo-700 rounded-xl mb-auto" src="{{image.remoteUrl}}">
-    {% endif %}
-    {% endfor %}
-        {% if movie.downloaded == true %}
-        {% else %}
-            <div class="absolute top-0 right-0 p-1 rounded-2xl shadow-md flex m-1 w-7 h-7 justify-items-center justify-center flex-row-reverse bg-white bg-opacity-95 text-white ml-auto">
-                <svg class=" animate-bounce text-indigo-800 w-full h-full text-center font-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                    <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v4m0 0l-2-2m2 2l2-2" />
-                </svg>
-            </div>
-    {% endif %}
-</a>
+        {% endif %}
+    </a>
+    <a href="{{path('user_library_delete', {movie : movie.id})}}" class="hidden transition group-hover:opacity-100 opacity-0 absolute top-0 right-0 p-1 m-1 rounded-2xl shadow-md h-7 w-7 justify-items-center justify-center flex-row-reverse bg-white bg-opacity-95 ml-auto">
+        <svg class=" text-red-800 w-full h-full text-center font-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+    </a>
+</div>

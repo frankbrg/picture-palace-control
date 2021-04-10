@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Services\Radarr;
+use App\Services\Api\Radarr;
 
 class UserController extends AbstractController
 {
@@ -14,10 +14,18 @@ class UserController extends AbstractController
      */
     public function index(Radarr $radarr): Response
     {
-        
-
         return $this->render('user/index.html.twig', [
             'movies' => $radarr->getMovies(),
         ]);
+    }
+
+    /**
+     * @Route("/library/delete/{movie}", name="user_library_delete")
+     */
+    public function delete(int $movie, Radarr $radarr) 
+    {
+        $radarr->delete($movie);
+        
+        return $this->redirectToRoute('user_library');
     }
 }
