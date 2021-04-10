@@ -7,7 +7,7 @@
 
     {% if movies is defined %}
         <h1 class="dark:text-white text-2xl font-bold my-2">Library</h1>
-        <div class= "flex flex-wrap pb-5">
+        <div class= "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-4">
             {% for movie in movies %}
                     {% include 'user/_card.html.twig' %}
             {% endfor %}

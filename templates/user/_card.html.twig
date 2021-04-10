@@ -1,28 +1,20 @@
 
 
 
-<a class="m-3" href="{{ path('movie', {id: movie.tmdbId,}) }}">
+<a class="relative" href="{{ path('movie', {id: movie.tmdbId,}) }}">
     {% for image in movie.images %}
-        {% if image.coverType == 'poster' %}
-            
-            <div class="{% if movie.downloaded == false %} animate-pulse {% endif %}flex flex-col bg-cover justify-items-center bg-indigo-700 rounded-xl mb-auto" style="background-image:url({{image.remoteUrl}})">
-        {% endif %}
+    {% if image.coverType == 'poster' %}
+        
+    <img width="150" height="200" class="{% if movie.downloaded == false %} animate-pulse {% endif %} flex flex-col w-full bg-cover justify-items-center bg-indigo-700 rounded-xl mb-auto" src="{{image.remoteUrl}}">
+    {% endif %}
     {% endfor %}
-        <div class="w-36 text-center overflow-hidden rounded-xl" style="height:13.5rem">
-            {% if movie.downloaded == true %}
-                <div class="rounded-2xl shadow-md flex m-1 w-7 h-7 justify-items-center justify-center flex-row-reverse bg-white bg-opacity-95 text-white ml-auto">
-                    <svg class=" text-green-700 w-full h-full text-center font-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-            {% else %}
-                <div class="rounded-2xl shadow-md flex m-1 p-1 w-7 h-7 justify-items-center justify-center flex-row-reverse bg-white bg-opacity-95 text-white ml-auto">
-                    <svg class=" animate-bounce text-indigo-800 w-full h-full text-center font-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v4m0 0l-2-2m2 2l2-2" />
-                    </svg>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+        {% if movie.downloaded == true %}
+        {% else %}
+            <div class="absolute top-0 right-0 p-1 rounded-2xl shadow-md flex m-1 w-7 h-7 justify-items-center justify-center flex-row-reverse bg-white bg-opacity-95 text-white ml-auto">
+                <svg class=" animate-bounce text-indigo-800 w-full h-full text-center font-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                    <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v4m0 0l-2-2m2 2l2-2" />
+                </svg>
+            </div>
+    {% endif %}
 </a>
