@@ -11,7 +11,7 @@ class QueryTvShowType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tvshow', null, array('label' => false))
+            ->add('search', null, array('label' => false))
         ;
     }
 

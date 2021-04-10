@@ -12,7 +12,7 @@ class QueryMovieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('movie', null, array('label' => false))
+            ->add('search', null, array('label' => false))
         ;
     }
 

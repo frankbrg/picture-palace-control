@@ -1,7 +1,7 @@
 
 
 
-<a class="relative" href="{{ path('movie', {id: movie.tmdbId,}) }}">
+<a class="relative" href="{{ path('show_movie', {id: movie.tmdbId,}) }}">
     {% for image in movie.images %}
     {% if image.coverType == 'poster' %}
         

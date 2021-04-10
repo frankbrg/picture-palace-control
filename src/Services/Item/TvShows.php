@@ -1,11 +1,17 @@
 <?php
-namespace App\Services;
+namespace App\Services\Item;
 
-class TvShows
+class TvShows extends AbstractItem 
 {
     private const apiKey = "384666e68d8f8e3ccd0d317fbd9f359a";
     private const link = "https://api.themoviedb.org/3/";
     private const type = "tv";
+
+    public function __construct() {
+        $this->controllerPath = 'show_tv';
+        $this->name = 'TV Show';
+        $this->slug = 'tvshow';
+    }
 
     private function preRequest($get, $search = null) {
 

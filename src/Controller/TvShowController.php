@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Services\TvShows;
+use App\Services\Item\TvShows;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +12,7 @@ use App\Form\QueryTvShowType;
 class TvShowController extends AbstractController
 {
     /**
-     * @Route("/tv/show", name="tv_show")
+     * @Route("/tv", name="tv")
      */
     public function index(Request $request, TvShows $tvShow): Response
     {
@@ -21,26 +21,25 @@ class TvShowController extends AbstractController
         }
 
         $param = [];
-        $param['popular'] = $tvShow->getPopular();
+        $param['data'] = $tvShow;
         $form = $this->createForm(QueryTvShowType::class);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $tvshow = $form->getData()['tvshow'];
+            $tvshow = $form->getData()['search'];
             $response = $tvShow->getTvShowByName($tvshow);
             $tvshows = $response;
             if ($tvshows) {
-                $param['tvshows'] = $tvshows;
+                $param['results'] = $tvshows;
             }
         }
         $param['form'] = $form->createView();
-
-        return $this->render('tv_show/tvshows_dashboard.html.twig', $param);
+        return $this->render('item/dashboard.html.twig', $param);
     }
 
     /**
-     * @Route("/tvshow/{id}", name="tvshow")
+     * @Route("/tv/{id}", name="show_tv")
      */
     public function findOutMoreAboutTvShow($id, TvShows $tvShow): Response
     {
@@ -48,16 +47,21 @@ class TvShowController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('tv_show/tvshow.html.twig', [
-            'tvshow' => $tvShow->getTvShowById($id),
+        $item = $tvShow->getTvShowById($id);
+
+        return $this->render('item/show.html.twig', [
+            'data' => $tvShow,
+            'title' => $item['name'],
+            'item' => $item,
             'cast' => $tvShow->getCastByTvShowId($id),
-            'similar' => $tvShow->getSimilarByTvShowId($id)
+            'similar' => $tvShow->getSimilarByTvShowId($id),
+            'pathDownload' => 'download_tv'
         ]);
 
     }
 
         /**
-     * @Route("/downloadtv/{id}", name="downloadTv")
+     * @Route("/tv/download/{id}", name="download_tv")
      */
     public function download($id, TvShows $tvShows): Response
     {
@@ -66,6 +70,6 @@ class TvShowController extends AbstractController
         }
 
         $response = $tvShows->downloadTv($tvShows->getTvShowById($id));
-        return $this->redirectToRoute('tv_show');
+        return $this->redirectToRoute('tv');
     }
 }
